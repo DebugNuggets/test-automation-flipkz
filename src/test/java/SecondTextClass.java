@@ -14,13 +14,27 @@ public class SecondTextClass {
     private WebDriver webDriver;
     private String urlFlip = "https://www.flip.kz/";
     private String profileHoverElement = "//span[@class='p500']";
+    private String exampleProductXpath = "//a[@class='pic l-h-250']";
+    private String addProductXpath = "//input[@id='cart_button']";
+    private String submitXpath = "//input[@name='order_button']";
+    private String fullNameXpath = "//input[@name='fullName']";
+    private String cityXpath = "//input[@name='city']";
+    private String addressXpath = "//input[@id='address1]";
+    private String buildingXpath = "//input[id='building']";
+    private String flatXpath = "//input[id='flat']";
+    private String entranceXpath = "//input[id='entrance']";
+    private String floorXpath = "//input[id='floor']";
+    private String submitOrder1Xpath = "//input[name='address_butt']";
     private String loginUsernameXpath = "//input[@id='username']";
     private String loginPasswordXpath = "//input[@id='password']";
     private String enterButtonXpath = "//input[@id='enter_button']";
     private String logOutXpath = "//a[@href='/user?exit']";
     private String rightPhoneNumber = "+7 705 296 60 64";
     private String rightPassword = "testPassword123";
-    private String exampleProductXpath = "//a[@class='pic l-h-250']";
+    private String city = "Нур-Султан";
+    private String fullName = "Ожогов Владислав Владимирович";
+    private String address = "Байконыр р-н, пр. Республика";
+
 
 
     @Test
@@ -70,6 +84,25 @@ public class SecondTextClass {
         WebElement productElement = productsElements.get(0);
 
         productElement.click();
+
+        WebElement addToCart = webDriver.findElement(By.xpath(addProductXpath));
+        addToCart.click();
+
+        WebElement confirm = webDriver.findElement(By.xpath(submitXpath));
+        confirm.click();
+        submitAddress(webDriver);
+    }
+
+
+    public void submitAddress(WebDriver webDriver1)
+    {
+        WebElement fullNameElement = webDriver1.findElement(By.xpath(fullNameXpath));
+        fullNameElement.sendKeys(fullName);
+        WebElement cityElement = webDriver1.findElement(By.xpath(cityXpath));
+        cityElement.sendKeys(city);
+        WebElement addressElement = webDriver1.findElement(By.xpath(addressXpath));
+        addressElement.sendKeys();
     }
 
 }
+
