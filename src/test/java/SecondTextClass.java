@@ -15,8 +15,6 @@ import static constants.NameConstants.*;
 public class SecondTextClass {
     private WebDriver webDriver;
 
-
-
     @Test
     public void logOutTest() {
         WebDriverManager.chromedriver().setup();
