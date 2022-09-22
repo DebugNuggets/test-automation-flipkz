@@ -4,6 +4,6 @@
 # IntelliJ IDE
 .idea
 *.iml
-.iml
+flipKz.iml
 /.iml
 /iml
