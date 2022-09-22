@@ -3,4 +3,7 @@
 
 # IntelliJ IDE
 .idea
+*.iml
 .iml
+/.iml
+/iml
