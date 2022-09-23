@@ -43,6 +43,6 @@ public class NameConstants {
     public static final String FIND_BUTTON_XPATH = "//input[@type='submit']";
     public static final String SEARCH_KEY_EXAMPLE = "Java";
 
-    
+
 
 }
