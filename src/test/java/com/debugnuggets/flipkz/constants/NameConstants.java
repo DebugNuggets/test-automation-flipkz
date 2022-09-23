@@ -13,20 +13,15 @@ public class NameConstants {
     public static final String FULL_NAME_XPATH = "//input[@name='fullName']";
     public static final String CITY_XPATH = "//input[@name='city']";
     public static final String ADDRESS_XPATH = "//input[@id='address1']";
-<<<<<<< HEAD
-    public static final String BUILDING_XPATH = "//input[id='building']";
-    public static final String FLAT_XPATH = "//input[id='flat']";
-    public static final String ENTRANCE_XPATH = "//input[id='entrance']";
-    public static final String FLOOR_XPATH = "//input[id='floor']";
-    public static final String SUBMIT_ORDER_1_XPATH = "//input[name='address_butt']";
-=======
+
+
     public static final String BUILDING_XPATH = "//input[@id='building']";
     public static final String FLAT_XPATH = "//input[@id='flat']";
     public static final String ENTRANCE_XPATH = "//input[@id='entrance']";
     public static final String FLOOR_XPATH = "//input[@id='floor']";
     public static final String POSTAL_CODE_XPATH = "//input[@id='post']";
     public static final String SUBMIT_ORDER_1_XPATH = "//input[@name='address_butt']";
->>>>>>> 5b20047766533e7828ecc8b793a3a62b3670dfb2
+
     public static final String LOGIN_USERNAME_XPATH = "//input[@id='username']";
     public static final String LOGIN_PASSWORD_XPATH = "//input[@id='password']";
     public static final String ENTER_BUTTON_XPATH = "//input[@id='enter_button']";
