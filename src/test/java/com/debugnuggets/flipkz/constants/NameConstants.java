@@ -11,7 +11,7 @@ public class NameConstants {
     public static final String SUBMIT_XPATH = "//input[@name='order_button']";
     public static final String FULL_NAME_XPATH = "//input[@name='fullName']";
     public static final String CITY_XPATH = "//input[@name='city']";
-    public static final String ADDRESS_XPATH = "//input[@id='address1]";
+    public static final String ADDRESS_XPATH = "//input[@id='address1']";
     public static final String BUILDING_XPATH = "//input[id='building']";
     public static final String FLAT_XPATH = "//input[id='flat']";
     public static final String ENTRANCE_XPATH = "//input[id='entrance']";
