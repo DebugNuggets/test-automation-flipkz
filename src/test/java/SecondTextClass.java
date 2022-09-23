@@ -8,7 +8,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.List;
+import java.util.Random;
 
 import static com.debugnuggets.flipkz.constants.NameConstants.*;
 
@@ -41,6 +43,7 @@ public class SecondTextClass {
     }
 
     public void logIn(WebDriver webDriver1) {
+        new WebDriverWait(webDriver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(PROFILE_HOVER_ELEMENT)));
         WebElement webElementProfile = webDriver1.findElement(By.xpath(PROFILE_HOVER_ELEMENT));
         webElementProfile.click();
         WebElement loginBar = webDriver1.findElement(By.xpath(LOGIN_USERNAME_XPATH));
@@ -52,11 +55,43 @@ public class SecondTextClass {
     }
 
     @Test
-    public void addProductToCart()
+    public void wrongLogIn()
     {
         WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
         webDriver.navigate().to(WWW_FLIP_KZ);
+        new WebDriverWait(webDriver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(PROFILE_HOVER_ELEMENT)));
+        WebElement webElementProfile = webDriver.findElement(By.xpath(PROFILE_HOVER_ELEMENT));
+        webElementProfile.click();
+        WebElement loginBar = webDriver.findElement(By.xpath(LOGIN_USERNAME_XPATH));
+
+        Random r = new Random();
+        StringBuilder wrongPhone = new StringBuilder(WRONG_PHONE_NUMBER);
+        for (int i = 0; i<10; i++)
+        {
+            if(i==0 || i==3 || i==6 || i==8)
+                wrongPhone.append(SPACE);
+            wrongPhone.append(r.nextInt(9));
+
+        }
+        loginBar.sendKeys(wrongPhone.toString());
+        WebElement passwordBar = webDriver.findElement(By.xpath(LOGIN_PASSWORD_XPATH));
+        StringBuilder wrongPassword = new StringBuilder(WRONG_PASSWORD);
+        for (int i = 0; i<7; i++)
+        {
+            char c = (char)(r.nextInt(26) + 'a');
+            wrongPassword.append(c);
+        }
+        passwordBar.sendKeys(wrongPassword);
+        WebElement loginButton = webDriver.findElement(By.xpath(ENTER_BUTTON_XPATH));
+        loginButton.click();
+    }
+    @Test
+    public void addProductToCart() throws InterruptedException {
+        WebDriverManager.chromedriver().setup();
+        webDriver = new ChromeDriver();
+        webDriver.navigate().to(WWW_FLIP_KZ);
+        webDriver.manage().window().maximize();
         logIn(webDriver);
 
         List<WebElement> productsElements = webDriver.findElements(By.xpath(EXAMPLE_PRODUCT_XPATH));
@@ -68,19 +103,35 @@ public class SecondTextClass {
         addToCart.click();
 
         WebElement confirm = webDriver.findElement(By.xpath(SUBMIT_XPATH));
-        confirm.click();
+        new WebDriverWait(webDriver, 20).until(ExpectedConditions.elementToBeClickable(confirm)).click();
+        //confirm.click();
         submitAddress(webDriver);
     }
-
 
     public void submitAddress(WebDriver webDriver1)
     {
         WebElement fullNameElement = webDriver1.findElement(By.xpath(FULL_NAME_XPATH));
         fullNameElement.sendKeys(FULL_NAME);
         WebElement cityElement = webDriver1.findElement(By.xpath(CITY_XPATH));
+        cityElement.clear();
         cityElement.sendKeys(CITY);
         WebElement addressElement = webDriver1.findElement(By.xpath(ADDRESS_XPATH));
-        addressElement.sendKeys();
+        addressElement.sendKeys(ADDRESS);
+        WebElement buildingElement = webDriver1.findElement(By.xpath(BUILDING_XPATH));
+        buildingElement.sendKeys(BUILDING);
+        WebElement flatElement = webDriver1.findElement(By.xpath(FLAT_XPATH));
+        flatElement.sendKeys(FLAT);
+        WebElement entranceElement = webDriver1.findElement(By.xpath(ENTRANCE_XPATH));
+        entranceElement.sendKeys(ENTRANCE);
+        WebElement floorElement = webDriver1.findElement(By.xpath(FLOOR_XPATH));
+        floorElement.sendKeys(FLOOR);
+        WebElement postalCodeElement = webDriver1.findElement(By.xpath(POSTAL_CODE_XPATH));
+        postalCodeElement.clear();
+        postalCodeElement.sendKeys(POSTAL_CODE);
+        WebElement addressButton = webDriver1.findElement(By.xpath(SUBMIT_ORDER_1_XPATH));
+        addressButton.click();
+        WebElement submitButton = webDriver1.findElement(By.xpath(DEFAULT_SUBMIT_XPATH));
+        submitButton.click();
     }
 
 }
