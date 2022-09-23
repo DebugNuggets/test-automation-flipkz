@@ -13,15 +13,12 @@ public class NameConstants {
     public static final String FULL_NAME_XPATH = "//input[@name='fullName']";
     public static final String CITY_XPATH = "//input[@name='city']";
     public static final String ADDRESS_XPATH = "//input[@id='address1']";
-
-
     public static final String BUILDING_XPATH = "//input[@id='building']";
     public static final String FLAT_XPATH = "//input[@id='flat']";
     public static final String ENTRANCE_XPATH = "//input[@id='entrance']";
     public static final String FLOOR_XPATH = "//input[@id='floor']";
-    public static final String POSTAL_CODE_XPATH = "//input[@id='post']";
     public static final String SUBMIT_ORDER_1_XPATH = "//input[@name='address_butt']";
-
+    public static final String POSTAL_CODE_XPATH = "//input[@id='post']";
     public static final String LOGIN_USERNAME_XPATH = "//input[@id='username']";
     public static final String LOGIN_PASSWORD_XPATH = "//input[@id='password']";
     public static final String ENTER_BUTTON_XPATH = "//input[@id='enter_button']";
@@ -39,6 +36,14 @@ public class NameConstants {
     public static final String POSTAL_CODE = "010000";
     public static final String FULL_NAME = "Ожогов Владислав Владимирович";
     public static final String ADDRESS = "Байконыр р-н, пр. Республика";
+    public static final String WRONG_CITY = "НьюЙорк";
+    public static final String WRONG_BUILDING = "5000";
+    public static final String WRONG_FLAT = "7200";
+    public static final String WRONG_ENTRANCE = "500";
+    public static final String WRONG_FLOOR = "512";
+    public static final String WRONG_POSTAL_CODE = "012300";
+    public static final String WRONG_FULL_NAME = "Иван Иванов Иванович";
+    public static final String WRONG_ADDRESS = "район";
     public static final String SEARCH_INPUT_XPATH = "//input[@id='search_input']";
     public static final String FIND_BUTTON_XPATH = "//input[@type='submit']";
     public static final String SEARCH_KEY_EXAMPLE = "Java";

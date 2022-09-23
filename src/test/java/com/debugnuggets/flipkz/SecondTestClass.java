@@ -88,28 +88,32 @@ public class SecondTestClass {
         loginButton.click();
     }
     @Test
-    public void addProductToCart() throws InterruptedException {
+    public void submitOrderWithRightCredentials()
+    {
         WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
         webDriver.navigate().to(WWW_FLIP_KZ);
         webDriver.manage().window().maximize();
         logIn(webDriver);
+        addProductToCart(webDriver);
+        submitRightAddress(webDriver);
+    }
 
-        List<WebElement> productsElements = webDriver.findElements(By.xpath(EXAMPLE_PRODUCT_XPATH));
+    public void addProductToCart(WebDriver webDriver1) {
+
+        List<WebElement> productsElements = webDriver1.findElements(By.xpath(EXAMPLE_PRODUCT_XPATH));
         WebElement productElement = productsElements.get(0);
 
         productElement.click();
 
-        WebElement addToCart = webDriver.findElement(By.xpath(ADD_PRODUCT_XPATH));
+        WebElement addToCart = webDriver1.findElement(By.xpath(ADD_PRODUCT_XPATH));
         addToCart.click();
 
-        WebElement confirm = webDriver.findElement(By.xpath(SUBMIT_XPATH));
-        new WebDriverWait(webDriver, 20).until(ExpectedConditions.elementToBeClickable(confirm)).click();
-        //confirm.click();
-        submitAddress(webDriver);
+        WebElement confirm = webDriver1.findElement(By.xpath(SUBMIT_XPATH));
+        new WebDriverWait(webDriver1, 20).until(ExpectedConditions.elementToBeClickable(confirm)).click();
     }
 
-    public void submitAddress(WebDriver webDriver1)
+    public void submitRightAddress(WebDriver webDriver1)
     {
         WebElement fullNameElement = webDriver1.findElement(By.xpath(FULL_NAME_XPATH));
         fullNameElement.sendKeys(FULL_NAME);
@@ -135,5 +139,42 @@ public class SecondTestClass {
         submitButton.click();
     }
 
+    @Test
+    public void submitOrderWithWrongCredentials()
+    {
+        WebDriverManager.chromedriver().setup();
+        webDriver = new ChromeDriver();
+        webDriver.navigate().to(WWW_FLIP_KZ);
+        webDriver.manage().window().maximize();
+        logIn(webDriver);
+        addProductToCart(webDriver);
+        submitWrongAddress(webDriver);
+    }
+
+    public void submitWrongAddress(WebDriver webDriver1)
+    {
+        WebElement fullNameElement = webDriver1.findElement(By.xpath(FULL_NAME_XPATH));
+        fullNameElement.sendKeys(WRONG_FULL_NAME);
+        WebElement cityElement = webDriver1.findElement(By.xpath(CITY_XPATH));
+        cityElement.clear();
+        cityElement.sendKeys(WRONG_CITY);
+        WebElement addressElement = webDriver1.findElement(By.xpath(ADDRESS_XPATH));
+        addressElement.sendKeys(WRONG_ADDRESS);
+        WebElement buildingElement = webDriver1.findElement(By.xpath(BUILDING_XPATH));
+        buildingElement.sendKeys(WRONG_BUILDING);
+        WebElement flatElement = webDriver1.findElement(By.xpath(FLAT_XPATH));
+        flatElement.sendKeys(WRONG_FLAT);
+        WebElement entranceElement = webDriver1.findElement(By.xpath(ENTRANCE_XPATH));
+        entranceElement.sendKeys(WRONG_ENTRANCE);
+        WebElement floorElement = webDriver1.findElement(By.xpath(FLOOR_XPATH));
+        floorElement.sendKeys(WRONG_FLOOR);
+        WebElement postalCodeElement = webDriver1.findElement(By.xpath(POSTAL_CODE_XPATH));
+        postalCodeElement.clear();
+        postalCodeElement.sendKeys(WRONG_POSTAL_CODE);
+        WebElement addressButton = webDriver1.findElement(By.xpath(SUBMIT_ORDER_1_XPATH));
+        addressButton.click();
+        WebElement submitButton = webDriver1.findElement(By.xpath(DEFAULT_SUBMIT_XPATH));
+        submitButton.click();
+    }
 }
 

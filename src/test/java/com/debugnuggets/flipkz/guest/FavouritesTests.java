@@ -3,7 +3,6 @@ package com.debugnuggets.flipkz.guest;
 import com.debugnuggets.flipkz.PropertiesUtil;
 import com.debugnuggets.flipkz.SecondTestClass;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
