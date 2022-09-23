@@ -25,6 +25,9 @@ public class NameConstants {
     public static final String LOG_OUT_XPATH = "//a[@href='/user?exit']";
     public static final String RIGHT_PHONE_NUMBER = "+7 705 296 60 64";
     public static final String RIGHT_PASSWORD = "testPassword123";
+    public static final String WRONG_PHONE_NUMBER = "+7";
+    public static final String WRONG_PASSWORD = "";
+    public static final String SPACE = " ";
     public static final String CITY = "Нур-Султан";
     public static final String BUILDING = "40";
     public static final String FLAT = "72";

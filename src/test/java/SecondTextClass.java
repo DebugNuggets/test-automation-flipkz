@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Random;
 
 import static com.debugnuggets.flipkz.constants.NameConstants.*;
 
@@ -53,6 +54,38 @@ public class SecondTextClass {
         loginButton.click();
     }
 
+    @Test
+    public void wrongLogIn()
+    {
+        WebDriverManager.chromedriver().setup();
+        webDriver = new ChromeDriver();
+        webDriver.navigate().to(WWW_FLIP_KZ);
+        new WebDriverWait(webDriver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(PROFILE_HOVER_ELEMENT)));
+        WebElement webElementProfile = webDriver.findElement(By.xpath(PROFILE_HOVER_ELEMENT));
+        webElementProfile.click();
+        WebElement loginBar = webDriver.findElement(By.xpath(LOGIN_USERNAME_XPATH));
+
+        Random r = new Random();
+        StringBuilder wrongPhone = new StringBuilder(WRONG_PHONE_NUMBER);
+        for (int i = 0; i<10; i++)
+        {
+            if(i==0 || i==3 || i==6 || i==8)
+                wrongPhone.append(SPACE);
+            wrongPhone.append(r.nextInt(9));
+
+        }
+        loginBar.sendKeys(wrongPhone.toString());
+        WebElement passwordBar = webDriver.findElement(By.xpath(LOGIN_PASSWORD_XPATH));
+        StringBuilder wrongPassword = new StringBuilder(WRONG_PASSWORD);
+        for (int i = 0; i<7; i++)
+        {
+            char c = (char)(r.nextInt(26) + 'a');
+            wrongPassword.append(c);
+        }
+        passwordBar.sendKeys(wrongPassword);
+        WebElement loginButton = webDriver.findElement(By.xpath(ENTER_BUTTON_XPATH));
+        loginButton.click();
+    }
     @Test
     public void addProductToCart() throws InterruptedException {
         WebDriverManager.chromedriver().setup();
