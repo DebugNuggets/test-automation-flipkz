@@ -1,6 +1,9 @@
 package com.debugnuggets.flipkz.guest;
 
+import com.debugnuggets.flipkz.PropertiesUtil;
+import com.debugnuggets.flipkz.SecondTestClass;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +15,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.Properties;
 
 import static com.debugnuggets.flipkz.constants.NameConstants.PROFILE_HOVER_ELEMENT;
 import static com.debugnuggets.flipkz.constants.NameConstants.WWW_FLIP_KZ;
@@ -94,6 +98,10 @@ public class FavouritesTests {
 
         sleep(2);
 
+        SecondTestClass.logIn(webDriver);
+
+        sleep(2);
+
         WebElement webElement1 =  webDriver.findElement(By.xpath(PROFILE_HOVER_ELEMENT));
 
         sleep(2);
@@ -112,5 +120,9 @@ public class FavouritesTests {
         WebElement labelForFavourite = webDriver.findElement(By.xpath("//label[@for='" + id + "']"));
 
         labelForFavourite.click();
+
+        sleep(2);
+
+        webDriver.navigate().refresh();
     }
 }

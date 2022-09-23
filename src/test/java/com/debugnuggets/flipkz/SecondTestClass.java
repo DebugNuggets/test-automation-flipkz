@@ -1,3 +1,5 @@
+package com.debugnuggets.flipkz;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,15 +10,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Random;
 
 import static com.debugnuggets.flipkz.constants.NameConstants.*;
 
-public class SecondTextClass {
+public class SecondTestClass {
 
-    private WebDriver webDriver;
+    private static WebDriver webDriver;
 
     @Test
     public void logOutTest() {
@@ -42,8 +43,8 @@ public class SecondTextClass {
         logIn(webDriver);
     }
 
-    public void logIn(WebDriver webDriver1) {
-        new WebDriverWait(webDriver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(PROFILE_HOVER_ELEMENT)));
+    public static void logIn(WebDriver webDriver1) {
+//        new WebDriverWait(webDriver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(PROFILE_HOVER_ELEMENT)));
         WebElement webElementProfile = webDriver1.findElement(By.xpath(PROFILE_HOVER_ELEMENT));
         webElementProfile.click();
         WebElement loginBar = webDriver1.findElement(By.xpath(LOGIN_USERNAME_XPATH));
