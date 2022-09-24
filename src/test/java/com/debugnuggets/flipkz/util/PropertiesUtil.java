@@ -1,4 +1,4 @@
-package com.debugnuggets.flipkz;
+package com.debugnuggets.flipkz.util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.util.Properties;
 
 public class PropertiesUtil {
 
+    private static final String PROPERTIES_PATH = "./src/test/resources/constants.properties";
     private Properties properties;
     private static PropertiesUtil instance;
 
@@ -22,9 +23,13 @@ public class PropertiesUtil {
 
     public Properties getProperties() {
         if (properties == null) {
-            properties = new Properties();
+            synchronized (this) {
+                if (properties == null) {
+                    properties = new Properties();
+                }
+            }
         }
-        try(FileInputStream fileInputStream = new FileInputStream("application.properties");) {
+        try(FileInputStream fileInputStream = new FileInputStream(PROPERTIES_PATH)) {
             properties.load(fileInputStream);
         } catch (IOException e) {
             e.printStackTrace();
