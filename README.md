@@ -17,7 +17,7 @@
 ||3. Input wrong credentials|Login should fail|
 | `3) Verify logout function` | 1. Hover over profile in the top-right corner |Function list should appear, which includes logout|
 ||2. Press the logout button|The page should refresh with no user profile|
-| `4)Attempt to order a product with wrong address`| 1. Scroll down the products list and press any product |Product page should appear|
+| `4)Attempt to order a product with wrong address`| 1. Scroll down <br />the products list and press any product |Product page should appear|
 
 
 
