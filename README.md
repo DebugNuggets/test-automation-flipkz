@@ -21,7 +21,13 @@
 |`10) Remove product from favourites`|||
 
 
+## Stack
 
+- Java 1.8
+- Maven
+- Selenium Java
+- WebDriverManager by bonigarcia
+- TestNG for unit testing
 
 
 ## Authors
