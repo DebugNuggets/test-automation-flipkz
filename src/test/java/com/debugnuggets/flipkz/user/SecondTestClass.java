@@ -1,5 +1,6 @@
 package com.debugnuggets.flipkz.user;
 
+import com.debugnuggets.flipkz.util.DriverSettings;
 import com.debugnuggets.flipkz.util.PropertiesUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
@@ -18,14 +19,14 @@ import java.util.Random;
 import static com.debugnuggets.flipkz.constants.NameConstants.*;
 
 public class SecondTestClass {
-
-    private static WebDriver webDriver;
     private static Properties properties = PropertiesUtil.getInstance().getProperties();
+    public DriverSettings driverSettings = new DriverSettings();
+    private WebDriver webDriver;
 
     @Test
     public void logOutTest() {
-        WebDriverManager.chromedriver().setup();
-        webDriver = new ChromeDriver();
+        driverSettings.initDriver();
+        webDriver = driverSettings.getDriver();
         webDriver.navigate().to(properties.getProperty(WWW_FLIP_KZ));
         logIn(webDriver);
         WebElement webElement1 =  webDriver.findElement(By.xpath(properties.getProperty(PROFILE_HOVER_ELEMENT)));
@@ -40,8 +41,8 @@ public class SecondTestClass {
     @Test
     public void justLogin()
     {
-        WebDriverManager.chromedriver().setup();
-        webDriver = new ChromeDriver();
+        driverSettings.initDriver();
+        webDriver = driverSettings.getDriver();
         webDriver.navigate().to(properties.getProperty(WWW_FLIP_KZ));
         logIn(webDriver);
     }
