@@ -34,10 +34,6 @@ public class SecondTestClass {
         webDriver.navigate().to(properties.getProperty(WWW_FLIP_KZ));
         logIn(webDriver);
         MainPage mainPage = MainPage.getInstance(webDriver);
-        Actions actions = actionsUtil.getActions(webDriver);
-        actions.moveToElement(mainPage.getProfileHoverElement()).perform();
-        WebDriverWait wait = webDriverWaitUtil.getWebDriverWait(webDriver);
-        wait.until(ExpectedConditions.visibilityOfElementLocated((By) mainPage.getLogOutButton()));
         mainPage.getLogOutButton().click();
     }
 

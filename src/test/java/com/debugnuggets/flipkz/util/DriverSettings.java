@@ -21,7 +21,7 @@ public class DriverSettings {
                 WebDriverManager.chromedriver().setup();
                 webDriver = new ChromeDriver();
         }
-        webDriver.manage().window().fullscreen();
+        webDriver.manage().window();
     }
     public WebDriver getDriver()
     {

@@ -60,6 +60,7 @@ public class NameConstants {
     public static final String SEARCH_KEY_EXAMPLE = "search.key.example";
     public static final String ID = "id";
     public static final String THERE_IS_NO_FAVOURITES_MESSAGE = "there.is.no.favourites.message";
+    public static String HTML_REPORT_PATH;
 
 
 

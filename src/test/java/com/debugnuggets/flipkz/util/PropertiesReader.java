@@ -8,5 +8,5 @@ import org.aeonbits.owner.Config;
 })
 public interface PropertiesReader extends Config{
     String browser();
-
+    String urlFlipKz();
 }

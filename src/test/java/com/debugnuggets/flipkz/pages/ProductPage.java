@@ -13,12 +13,12 @@ import static com.debugnuggets.flipkz.constants.NameConstants.SUBMIT_XPATH;
 public class ProductPage {
     private static final Properties properties = PropertiesUtil.getInstance().getProperties();
     private static ProductPage instance;
-    private final WebElement addToCartElement;
-    private final WebElement submitButton;
+    private WebElement addToCartElement;
+    private WebElement submitButton;
+    private static WebDriver webDriver;
     public ProductPage(WebDriver webDriver)
     {
-        addToCartElement = webDriver.findElement(By.xpath(properties.getProperty(ADD_PRODUCT_XPATH)));
-        submitButton = webDriver.findElement(By.xpath(properties.getProperty(SUBMIT_XPATH)));
+        ProductPage.webDriver = webDriver;
     }
 
     public static ProductPage getInstance(WebDriver webDriver) {
@@ -29,10 +29,12 @@ public class ProductPage {
     }
 
     public WebElement getAddToCartElement() {
+        addToCartElement = webDriver.findElement(By.xpath(properties.getProperty(ADD_PRODUCT_XPATH)));
         return addToCartElement;
     }
 
     public WebElement getSubmitButton() {
+        submitButton = webDriver.findElement(By.xpath(properties.getProperty(SUBMIT_XPATH)));
         return submitButton;
     }
 }

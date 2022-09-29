@@ -13,15 +13,14 @@ import static com.debugnuggets.flipkz.constants.NameConstants.*;
 public class LoginPage {
     private static final Properties properties = PropertiesUtil.getInstance().getProperties();
     private static LoginPage instance;
-    private final WebElement usernameElement;
-    private final WebElement passwordElement;
-    private final WebElement enterButton;
+    private static WebDriver webDriver;
+    private WebElement usernameElement;
+    private WebElement passwordElement;
+    private WebElement enterButton;
 
     public LoginPage(WebDriver webDriver)
     {
-        usernameElement = webDriver.findElement(By.xpath(properties.getProperty(LOGIN_USERNAME_XPATH)));
-        passwordElement = webDriver.findElement(By.xpath(properties.getProperty(LOGIN_PASSWORD_XPATH)));
-        enterButton = webDriver.findElement(By.xpath(properties.getProperty(ENTER_BUTTON_XPATH)));
+        LoginPage.webDriver =webDriver;
     }
 
     public static LoginPage getInstance(WebDriver webDriver) {
@@ -32,14 +31,17 @@ public class LoginPage {
     }
 
     public WebElement getUsernameElement() {
+        usernameElement = webDriver.findElement(By.xpath(properties.getProperty(LOGIN_USERNAME_XPATH)));
         return usernameElement;
     }
 
     public WebElement getPasswordElement() {
+        passwordElement = webDriver.findElement(By.xpath(properties.getProperty(LOGIN_PASSWORD_XPATH)));
         return passwordElement;
     }
 
     public WebElement getEnterButton() {
+        enterButton = webDriver.findElement(By.xpath(properties.getProperty(ENTER_BUTTON_XPATH)));
         return enterButton;
     }
 }
