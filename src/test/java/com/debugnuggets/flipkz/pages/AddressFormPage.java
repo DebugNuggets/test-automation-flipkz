@@ -4,6 +4,7 @@ import com.debugnuggets.flipkz.util.PropertiesUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import java.util.Properties;
 
@@ -13,6 +14,7 @@ public class AddressFormPage {
     private static final Properties properties = PropertiesUtil.getInstance().getProperties();
     private static AddressFormPage instance;
     public static WebDriver webDriver;
+
     private WebElement fullNameElement;
     private WebElement cityElement;
     private WebElement addressElement;

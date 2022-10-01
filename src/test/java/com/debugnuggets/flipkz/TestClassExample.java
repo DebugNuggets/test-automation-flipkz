@@ -1,13 +1,26 @@
 package com.debugnuggets.flipkz;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.ChartLocation;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.Random;
+
+import static com.debugnuggets.flipkz.util.BaseTest.extent;
 
 public class TestClassExample {
     private WebDriver webDriver;
@@ -26,57 +39,82 @@ public class TestClassExample {
     private String emailEnding = "@gmail.com";
     private String space = " ";
     private String workingNumber = "+7 705 296 60 66";
-    @Test
-    public void firstRegistrationTest()
-    {
-        WebDriverManager.chromedriver().setup();
-        webDriver = new ChromeDriver();
-        webDriver.navigate().to(urlFlip);
-        WebElement webElement1 =  webDriver.findElement(By.linkText(registerForward));
-        webElement1.click();
 
-        WebElement webElement2 = webDriver.findElement(By.xpath(registerXpath));
-        webElement2.click();
+    ExtentHtmlReporter htmlReporter;
 
-        Random r = new Random();
-        WebElement webElement3 = webDriver.findElement(By.xpath(registerNameXpath));
-        for (int i = 0; i<7; i++)
-        {
-            char c = (char)(r.nextInt(26) + 'a');
-            registerNameText+=c;
-        }
-        webElement3.sendKeys(registerNameText);
+    ExtentReports reports;
 
-        WebElement webElement4 = webDriver.findElement(By.xpath(registerPhoneXpath));
-        for (int i = 0; i<10; i++)
-        {
-            registerPhoneText1+=r.nextInt(9);
-        }
-        webElement4.sendKeys(registerPhoneText1);
+    ExtentTest test;
 
-        WebElement webElement5 = webDriver.findElement(By.xpath(registerEmailXpath));
-        for (int i = 0; i<7; i++)
-        {
-            char c = (char)(r.nextInt(26) + 'a');
-            registerEmailText+=c;
-        }
-        registerEmailText+=emailEnding;
-        webElement5.sendKeys(registerEmailText);
+    @BeforeTest
+    public void startReport() {
+        htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/test-output/testReport.html");
 
-        WebElement webElement6 = webDriver.findElement(By.xpath(registerPasswordXpath));
-        for (int i = 0; i<7; i++)
-        {
-            char c = (char)(r.nextInt(26) + 'a');
-            registerPasswordText+=c;
-        }
-        webElement6.sendKeys(registerPasswordText);
+        extent = new ExtentReports();
+        extent.attachReporter(htmlReporter);
 
-
-        //a[href='https://www.flip.kz/user?reg']
+        htmlReporter.config().setChartVisibilityOnOpen(true);
+        htmlReporter.config().setDocumentTitle("Simple Automation Report");
+        htmlReporter.config().setReportName("Test Report");
+        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
+        htmlReporter.config().setTheme(Theme.DARK);
+        htmlReporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
     }
+
+//    @Test
+//    public void firstRegistrationTest()
+//    {
+//        test = extent.createTest("Test Case 1", "The test case 1 has passed");
+//
+//        WebDriverManager.chromedriver().setup();
+//        webDriver = new ChromeDriver();
+//        webDriver.navigate().to(urlFlip);
+//        WebElement webElement1 =  webDriver.findElement(By.linkText(registerForward));
+//        webElement1.click();
+//
+//        WebElement webElement2 = webDriver.findElement(By.xpath(registerXpath));
+//        webElement2.click();
+//
+//        Random r = new Random();
+//        WebElement webElement3 = webDriver.findElement(By.xpath(registerNameXpath));
+//        for (int i = 0; i<7; i++)
+//        {
+//            char c = (char)(r.nextInt(26) + 'a');
+//            registerNameText+=c;
+//        }
+//        webElement3.sendKeys(registerNameText);
+//
+//        WebElement webElement4 = webDriver.findElement(By.xpath(registerPhoneXpath));
+//        for (int i = 0; i<10; i++)
+//        {
+//            registerPhoneText1+=r.nextInt(9);
+//        }
+//        webElement4.sendKeys(registerPhoneText1);
+//
+//        WebElement webElement5 = webDriver.findElement(By.xpath(registerEmailXpath));
+//        for (int i = 0; i<7; i++)
+//        {
+//            char c = (char)(r.nextInt(26) + 'a');
+//            registerEmailText+=c;
+//        }
+//        registerEmailText+=emailEnding;
+//        webElement5.sendKeys(registerEmailText);
+//
+//        WebElement webElement6 = webDriver.findElement(By.xpath(registerPasswordXpath));
+//        for (int i = 0; i<7; i++)
+//        {
+//            char c = (char)(r.nextInt(26) + 'a');
+//            registerPasswordText+=c;
+//        }
+//        webElement6.sendKeys(registerPasswordText);
+//
+//        //a[href='https://www.flip.kz/user?reg']
+//    }
     @Test
     public void secondRegistrationTest()
     {
+        test = extent.createTest("Test Case 2", "The test case 2 has passed");
+
         WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
         webDriver.navigate().to(urlFlip);
@@ -126,6 +164,8 @@ public class TestClassExample {
     @Test
     public void thirdRegistrationTest()
     {
+        test = extent.createTest("Test Case 3", "The test case 3 has passed");
+
         WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
         webDriver.navigate().to(urlFlip);
@@ -178,6 +218,8 @@ public class TestClassExample {
     @Test
     public void fourthRegistrationTest()
     {
+        test = extent.createTest("Test Case 4", "The test case 4 has passed");
+
         WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
         webDriver.navigate().to(urlFlip);
@@ -216,7 +258,23 @@ public class TestClassExample {
         }
         webElement6.sendKeys(registerPasswordText);
 
+    }
 
-        //a[href='https://www.flip.kz/user?reg']
+    @AfterMethod
+    public void getResult(ITestResult result) {
+        if(result.getStatus() == ITestResult.FAILURE) {
+            test.log(Status.FAIL,result.getThrowable());
+        }
+        else if(result.getStatus() == ITestResult.SUCCESS) {
+            test.log(Status.PASS, result.getTestName());
+        }
+        else {
+            test.log(Status.SKIP, result.getTestName());
+        }
+    }
+
+    @AfterTest
+    public void tearDown() {
+        extent.flush();
     }
 }
