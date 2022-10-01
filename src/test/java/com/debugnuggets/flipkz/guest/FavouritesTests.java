@@ -21,7 +21,6 @@ import static com.debugnuggets.flipkz.constants.NameConstants.ANDROID_APP_BUTTON
 import static com.debugnuggets.flipkz.constants.NameConstants.FAVOURITE_BUTTON_XPATH;
 import static com.debugnuggets.flipkz.constants.NameConstants.ID;
 import static com.debugnuggets.flipkz.constants.NameConstants.MY_FAVOURITES_BUTTON_XPATH;
-import static com.debugnuggets.flipkz.constants.NameConstants.PROFILE_HOVER_ELEMENT;
 import static com.debugnuggets.flipkz.constants.NameConstants.THERE_IS_NO_FAVOURITES_MESSAGE;
 import static com.debugnuggets.flipkz.constants.NameConstants.WWW_FLIP_KZ;
 
@@ -29,7 +28,7 @@ public class FavouritesTests {
 
     private WebDriver webDriver;
     private Properties properties = PropertiesUtil.getInstance().getProperties();
-
+    private final By profileHover = By.xpath("//span[@class='p500']");
     private void sleep(long sec) {
         long millis = sec * 1000;
         try {
@@ -64,7 +63,7 @@ public class FavouritesTests {
             sleep(2);
 
 
-            WebElement webElement1 =  webDriver.findElement(By.xpath(PROFILE_HOVER_ELEMENT));
+            WebElement webElement1 =  webDriver.findElement(profileHover);
             Actions actions = new Actions(webDriver);
             actions.moveToElement(webElement1).perform();
 
@@ -105,7 +104,7 @@ public class FavouritesTests {
         SecondTestClass.logIn(webDriver);
         sleep(2);
 
-        WebElement webElement1 =  webDriver.findElement(By.xpath(PROFILE_HOVER_ELEMENT));
+        WebElement webElement1 =  webDriver.findElement(profileHover);
         sleep(2);
 
         Actions actions = new Actions(webDriver);
