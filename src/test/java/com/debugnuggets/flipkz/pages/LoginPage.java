@@ -1,6 +1,5 @@
 package com.debugnuggets.flipkz.pages;
 
-import com.debugnuggets.flipkz.util.DriverSettings;
 import com.debugnuggets.flipkz.util.PropertiesUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,16 +7,16 @@ import org.openqa.selenium.WebElement;
 
 import java.util.Properties;
 
-import static com.debugnuggets.flipkz.constants.NameConstants.*;
-
 public class LoginPage {
     private static final Properties properties = PropertiesUtil.getInstance().getProperties();
     private static LoginPage instance;
     private static WebDriver webDriver;
     private WebElement usernameElement;
     private WebElement passwordElement;
-    private WebElement enterButton;
-
+    private WebElement enterButtonElement;
+    private final By loginUsername = By.xpath("//input[@id='username']");
+    private final By loginPassword = By.xpath("//input[@id='password']");
+    private final By enterButton = By.xpath("//input[@id='enter_button']");
     public LoginPage(WebDriver webDriver)
     {
         LoginPage.webDriver =webDriver;
@@ -31,17 +30,17 @@ public class LoginPage {
     }
 
     public WebElement getUsernameElement() {
-        usernameElement = webDriver.findElement(By.xpath(properties.getProperty(LOGIN_USERNAME_XPATH)));
+        usernameElement = webDriver.findElement(loginUsername);
         return usernameElement;
     }
 
     public WebElement getPasswordElement() {
-        passwordElement = webDriver.findElement(By.xpath(properties.getProperty(LOGIN_PASSWORD_XPATH)));
+        passwordElement = webDriver.findElement(loginPassword);
         return passwordElement;
     }
 
     public WebElement getEnterButton() {
-        enterButton = webDriver.findElement(By.xpath(properties.getProperty(ENTER_BUTTON_XPATH)));
-        return enterButton;
+        enterButtonElement = webDriver.findElement(enterButton);
+        return enterButtonElement;
     }
 }

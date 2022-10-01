@@ -5,24 +5,6 @@ public class NameConstants {
 
 
     public static final String WWW_FLIP_KZ = "website.url";
-    public static final String PROFILE_HOVER_ELEMENT = "profile.hover.element";
-    public static final String EXAMPLE_PRODUCT_XPATH = "example.product.xpath";
-    public static final String ADD_PRODUCT_XPATH = "add.product.xpath";
-    public static final String SUBMIT_XPATH = "submit.xpath";
-    public static final String DEFAULT_SUBMIT_XPATH = "default.submit.xpath";
-    public static final String FULL_NAME_XPATH = "full.name.xpath";
-    public static final String CITY_XPATH = "city.xpath";
-    public static final String ADDRESS_XPATH = "address.xpath";
-    public static final String BUILDING_XPATH = "building.xpath";
-    public static final String FLAT_XPATH = "flat.xpath";
-    public static final String ENTRANCE_XPATH = "entrance.xpath";
-    public static final String FLOOR_XPATH = "floor.xpath";
-    public static final String SUBMIT_ORDER_1_XPATH = "submit.order.1.xpath";
-    public static final String POSTAL_CODE_XPATH = "postal.code.xpath";
-    public static final String LOGIN_USERNAME_XPATH = "login.username.xpath";
-    public static final String LOGIN_PASSWORD_XPATH = "login.password.xpath";
-    public static final String ENTER_BUTTON_XPATH = "enter.button.xpath";
-    public static final String LOG_OUT_XPATH = "log.out.xpath";
     public static final String RIGHT_PHONE_NUMBER = "right.phone.number";
     public static final String RIGHT_PASSWORD = "right.password";
     public static final String WRONG_PHONE_NUMBER = "wrong.phone.number";

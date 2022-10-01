@@ -10,9 +10,7 @@ import com.debugnuggets.flipkz.util.PropertiesUtil;
 import com.debugnuggets.flipkz.util.WebDriverWaitUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import java.util.Properties;
@@ -27,6 +25,7 @@ public class SecondTestClass {
     public DriverSettings driverSettings = new DriverSettings();
     private WebDriver webDriver;
 
+
     @Test
     public void logOutTest() {
         driverSettings.initDriver();
@@ -34,7 +33,7 @@ public class SecondTestClass {
         webDriver.navigate().to(properties.getProperty(WWW_FLIP_KZ));
         logIn(webDriver);
         MainPage mainPage = MainPage.getInstance(webDriver);
-        mainPage.getLogOutButton().click();
+        mainPage.getLogOutButtonElement().click();
     }
 
     @Test
@@ -130,7 +129,7 @@ public class SecondTestClass {
         addressFormPage.getFloorElement().sendKeys(properties.getProperty(FLOOR));
         addressFormPage.getPostalCodeElement().clear();
         addressFormPage.getPostalCodeElement().sendKeys(properties.getProperty(POSTAL_CODE));
-        addressFormPage.getAddressButton().click();
+        addressFormPage.getAddressButtonElement().click();
         addressFormPage.getSubmitButton().click();
     }
 
@@ -147,7 +146,7 @@ public class SecondTestClass {
         addressFormPage.getFloorElement().sendKeys(properties.getProperty(WRONG_FLOOR));
         addressFormPage.getPostalCodeElement().clear();
         addressFormPage.getPostalCodeElement().sendKeys(properties.getProperty(WRONG_POSTAL_CODE));
-        addressFormPage.getAddressButton().click();
+        addressFormPage.getAddressButtonElement().click();
         addressFormPage.getSubmitButton().click();
     }
 }

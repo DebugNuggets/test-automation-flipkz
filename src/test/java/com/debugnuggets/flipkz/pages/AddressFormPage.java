@@ -1,20 +1,13 @@
 package com.debugnuggets.flipkz.pages;
 
-import com.debugnuggets.flipkz.util.PropertiesUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
-import java.util.Properties;
-
-import static com.debugnuggets.flipkz.constants.NameConstants.*;
 
 public class AddressFormPage {
-    private static final Properties properties = PropertiesUtil.getInstance().getProperties();
     private static AddressFormPage instance;
     public static WebDriver webDriver;
-
     private WebElement fullNameElement;
     private WebElement cityElement;
     private WebElement addressElement;
@@ -23,8 +16,19 @@ public class AddressFormPage {
     private WebElement entranceElement;
     private WebElement floorElement;
     private WebElement postalCodeElement;
-    private WebElement addressButton;
+    private WebElement addressButtonElement;
     private WebElement submitButton;
+
+    private final By fullName = By.xpath("//input[@name='fullName']");
+    private final By city = By.xpath("//input[@name='city']");
+    private final By address = By.xpath("//input[@id='address1']");
+    private final By building = By.xpath("//input[@id='building']");
+    private final By flat = By.xpath("//input[@id='flat']");
+    private final By entrance = By.xpath("//input[@id='entrance']");
+    private final By floor = By.xpath("//input[@id='floor']");
+    private final By postalCode = By.xpath("//input[@id='post']");
+    private final By addressButton = By.xpath("//input[@name='address_butt']");
+    private final By submit = By.xpath("//button[@type='submit']");
 
     public AddressFormPage(WebDriver webDriver)
     {
@@ -40,52 +44,52 @@ public class AddressFormPage {
     }
 
     public WebElement getFullNameElement() {
-        fullNameElement = webDriver.findElement(By.xpath(properties.getProperty(FULL_NAME_XPATH)));
+        fullNameElement = webDriver.findElement(fullName);
         return fullNameElement;
     }
 
     public WebElement getCityElement() {
-        cityElement = webDriver.findElement(By.xpath(properties.getProperty(CITY_XPATH)));
+        cityElement = webDriver.findElement(city);
         return cityElement;
     }
 
     public WebElement getAddressElement() {
-        addressElement = webDriver.findElement(By.xpath(properties.getProperty(ADDRESS_XPATH)));
+        addressElement = webDriver.findElement(address);
         return addressElement;
     }
 
     public WebElement getBuildingElement() {
-        buildingElement = webDriver.findElement(By.xpath(properties.getProperty(BUILDING_XPATH)));
+        buildingElement = webDriver.findElement(building);
         return buildingElement;
     }
 
     public WebElement getFlatElement() {
-        flatElement = webDriver.findElement(By.xpath(properties.getProperty(FLAT_XPATH)));
+        flatElement = webDriver.findElement(flat);
         return flatElement;
     }
 
     public WebElement getEntranceElement() {
-        entranceElement = webDriver.findElement(By.xpath(properties.getProperty(ENTRANCE_XPATH)));
+        entranceElement = webDriver.findElement(entrance);
         return entranceElement;
     }
 
     public WebElement getFloorElement() {
-        floorElement = webDriver.findElement(By.xpath(properties.getProperty(FLOOR_XPATH)));
+        floorElement = webDriver.findElement(floor);
         return floorElement;
     }
 
-    public WebElement getAddressButton() {
-        addressButton = webDriver.findElement(By.xpath(properties.getProperty(SUBMIT_ORDER_1_XPATH)));
-        return addressButton;
+    public WebElement getAddressButtonElement() {
+        addressButtonElement = webDriver.findElement(addressButton);
+        return addressButtonElement;
     }
 
     public WebElement getPostalCodeElement() {
-        postalCodeElement = webDriver.findElement(By.xpath(properties.getProperty(POSTAL_CODE_XPATH)));
+        postalCodeElement = webDriver.findElement(postalCode);
         return postalCodeElement;
     }
 
     public WebElement getSubmitButton() {
-        submitButton = webDriver.findElement(By.xpath(properties.getProperty(DEFAULT_SUBMIT_XPATH)));
+        submitButton = webDriver.findElement(submit);
         return submitButton;
     }
 }

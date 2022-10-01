@@ -7,15 +7,15 @@ import org.openqa.selenium.WebElement;
 
 import java.util.Properties;
 
-import static com.debugnuggets.flipkz.constants.NameConstants.ADD_PRODUCT_XPATH;
-import static com.debugnuggets.flipkz.constants.NameConstants.SUBMIT_XPATH;
 
 public class ProductPage {
     private static final Properties properties = PropertiesUtil.getInstance().getProperties();
     private static ProductPage instance;
     private WebElement addToCartElement;
-    private WebElement submitButton;
+    private WebElement submitButtonElement;
     private static WebDriver webDriver;
+    private final By addToCart = By.xpath("//input[@id='cart_button']");
+    private final By submitButton = By.xpath("//input[@name='order_button']");
     public ProductPage(WebDriver webDriver)
     {
         ProductPage.webDriver = webDriver;
@@ -29,12 +29,12 @@ public class ProductPage {
     }
 
     public WebElement getAddToCartElement() {
-        addToCartElement = webDriver.findElement(By.xpath(properties.getProperty(ADD_PRODUCT_XPATH)));
+        addToCartElement = webDriver.findElement(addToCart);
         return addToCartElement;
     }
 
     public WebElement getSubmitButton() {
-        submitButton = webDriver.findElement(By.xpath(properties.getProperty(SUBMIT_XPATH)));
-        return submitButton;
+        submitButtonElement = webDriver.findElement(submitButton);
+        return submitButtonElement;
     }
 }

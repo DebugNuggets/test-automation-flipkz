@@ -1,7 +1,6 @@
 package com.debugnuggets.flipkz.pages;
 
 import com.debugnuggets.flipkz.util.ActionsUtil;
-import com.debugnuggets.flipkz.util.DriverSettings;
 import com.debugnuggets.flipkz.util.PropertiesUtil;
 import com.debugnuggets.flipkz.util.WebDriverWaitUtil;
 import org.openqa.selenium.By;
@@ -14,7 +13,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 import java.util.Properties;
 
-import static com.debugnuggets.flipkz.constants.NameConstants.*;
 
 public class MainPage {
 
@@ -24,10 +22,13 @@ public class MainPage {
     private static MainPage instance;
     private static WebDriver webDriver;
     private WebElement profileHoverElement;
-    private WebElement logOutButton;
+    private WebElement logOutButtonElement;
     private WebElement firstProductElement;
     private List<WebElement> productsElements;
 
+    private final By profileHover = By.xpath("//span[@class='p500']");
+    private final By logOutButton = By.xpath("//a[@href='/user?exit']");
+    private final By exampleProducts = By.xpath("//a[@class='pic l-h-250']");
 
     public MainPage(WebDriver webDriver)
     {
@@ -42,17 +43,17 @@ public class MainPage {
     }
 
     public WebElement getProfileHoverElement() {
-        profileHoverElement = webDriver.findElement(By.xpath(properties.getProperty(PROFILE_HOVER_ELEMENT)));
+        profileHoverElement = webDriver.findElement(profileHover);
         return profileHoverElement;
     }
 
-    public WebElement getLogOutButton() {
+    public WebElement getLogOutButtonElement() {
         Actions actions = actionsUtil.getActions(webDriver);
         actions.moveToElement(getProfileHoverElement()).perform();
         WebDriverWait wait = webDriverWaitUtil.getWebDriverWait(webDriver);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(properties.getProperty(LOG_OUT_XPATH))));
-        logOutButton = webDriver.findElement(By.xpath(properties.getProperty(LOG_OUT_XPATH)));
-        return logOutButton;
+        wait.until(ExpectedConditions.visibilityOfElementLocated(logOutButton));
+        logOutButtonElement = webDriver.findElement(logOutButton);
+        return logOutButtonElement;
     }
 
     public WebElement getFirstProductElement() {
@@ -61,7 +62,7 @@ public class MainPage {
     }
 
     public List<WebElement> getProductsElements() {
-        productsElements = webDriver.findElements(By.xpath(properties.getProperty(EXAMPLE_PRODUCT_XPATH)));
+        productsElements = webDriver.findElements(exampleProducts);
         return productsElements;
     }
 }
