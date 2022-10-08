@@ -1,6 +1,6 @@
 package com.debugnuggets.flipkz.guest;
 
-import com.debugnuggets.flipkz.user.SecondTestClass;
+import com.debugnuggets.flipkz.user.SecondTest;
 import com.debugnuggets.flipkz.util.PropertiesUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
@@ -37,6 +37,7 @@ public class FavouritesTests {
             e.printStackTrace();
         }
     }
+
 
     @Test
     public void addProductToFavourites() {
@@ -101,7 +102,7 @@ public class FavouritesTests {
         webDriver.get(WWW_FLIP_KZ);
         sleep(2);
 
-        SecondTestClass.logIn(webDriver);
+        SecondTest.logIn(webDriver);
         sleep(2);
 
         WebElement webElement1 =  webDriver.findElement(profileHover);

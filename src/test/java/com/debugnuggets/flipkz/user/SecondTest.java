@@ -14,7 +14,10 @@ import com.debugnuggets.flipkz.util.ActionsUtil;
 import com.debugnuggets.flipkz.util.DriverSettings;
 import com.debugnuggets.flipkz.util.PropertiesUtil;
 import com.debugnuggets.flipkz.util.WebDriverWaitUtil;
-import org.openqa.selenium.By;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.ITestResult;
@@ -23,18 +26,29 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Properties;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import static com.debugnuggets.flipkz.constants.NameConstants.*;
 import static com.debugnuggets.flipkz.util.BaseTest.extent;
 
-public class SecondTestClass {
-    private static Properties properties = PropertiesUtil.getInstance().getProperties();
-    private static ActionsUtil actionsUtil = ActionsUtil.getInstance();
-    private static WebDriverWaitUtil webDriverWaitUtil = WebDriverWaitUtil.getInstance();
+public class SecondTest {
+
+    private static final Properties properties = PropertiesUtil.getInstance().getProperties();
+    private static final ActionsUtil actionsUtil = ActionsUtil.getInstance();
+    private static final WebDriverWaitUtil webDriverWaitUtil = WebDriverWaitUtil.getInstance();
     public DriverSettings driverSettings = new DriverSettings();
+
     private WebDriver webDriver;
+    private Workbook workbook;
+    private Sheet sheet;
+    private Cell cell;
+    private FileInputStream fileInputStream;
+    private FileOutputStream fileOutputStream;
 
     ExtentHtmlReporter htmlReporter;
 
@@ -43,12 +57,21 @@ public class SecondTestClass {
     ExtentTest test;
 
     @BeforeTest
-    public void startReport() {
-        htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") +"/test-output/testReport.html");
+    public void startReport() throws IOException {
 
+        fileInputStream = new FileInputStream(System.getProperty("user.dir") + properties.getProperty(EXCEL_FILE_PATH));
+        workbook = WorkbookFactory.create(fileInputStream);
+        sheet = workbook.getSheetAt(0);
+
+        driverSettings.initDriver();
+        webDriver = driverSettings.getDriver();
+        webDriver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+        webDriver.navigate().to(properties.getProperty(WWW_FLIP_KZ));
+        webDriver.manage().window().maximize();
+
+        htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + properties.getProperty(HTML_REPORT_FILE_PATH));
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
-
         htmlReporter.config().setChartVisibilityOnOpen(true);
         htmlReporter.config().setDocumentTitle("Simple Automation Report");
         htmlReporter.config().setReportName("Test Report");
@@ -57,27 +80,46 @@ public class SecondTestClass {
         htmlReporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
     }
 
-    @Test
-    public void logOutTest() {
-        test = extent.createTest("Test Case 1", "The test case 'log out' has passed");
-        driverSettings.initDriver();
-        webDriver = driverSettings.getDriver();
-        webDriver.navigate().to(properties.getProperty(WWW_FLIP_KZ));
-        logIn(webDriver);
-        MainPage mainPage = MainPage.getInstance(webDriver);
-        mainPage.getLogOutButtonElement().click();
+    @AfterTest
+    public void tearDown() throws IOException {
+        fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + properties.getProperty(EXCEL_FILE_PATH));
+        workbook.write(fileOutputStream);
+        fileOutputStream.close();
+        fileInputStream.close();
+        workbook.close();
+        webDriver.close();
+        extent.flush();
         webDriver.quit();
     }
 
+    @AfterMethod
+    public void getResult(ITestResult result) {
+        if(result.getStatus() == ITestResult.FAILURE) {
+            cell.setCellValue("FAILED");
+            test.log(Status.FAIL,result.getThrowable());
+        }
+        else if(result.getStatus() == ITestResult.SUCCESS) {
+            cell.setCellValue("PASSED");
+            test.log(Status.PASS, result.getTestName());
+        }
+        else {
+            test.log(Status.SKIP, result.getTestName());
+        }
+    }
+
     @Test
-    public void justLogin()
-    {
-        test = extent.createTest("Test Case 2", "The test case 'log in' has passed");
-        driverSettings.initDriver();
-        webDriver = driverSettings.getDriver();
-        webDriver.navigate().to(properties.getProperty(WWW_FLIP_KZ));
+    public void logOutTest() {
         logIn(webDriver);
-        webDriver.quit();
+        MainPage mainPage = MainPage.getInstance(webDriver);
+        mainPage.getLogOutButtonElement().click();
+        test = extent.createTest("Test Case 1", "The test case 'log out' has passed");
+    }
+
+    @Test
+    public void justLogin() {
+        cell = sheet.getRow(1).getCell(1);
+        logIn(webDriver);
+        test = extent.createTest("Test Case 2", "The test case 'log in' has passed");
     }
 
     public static void logIn(WebDriver webDriver1) {
@@ -90,14 +132,10 @@ public class SecondTestClass {
     }
 
     @Test
-    public void wrongLogIn()
-    {
-        test = extent.createTest("Test Case 3", "The test case 'wrong log in' has passed");
-        driverSettings.initDriver();
-        webDriver = driverSettings.getDriver();
+    public void wrongLogIn() {
+        cell = sheet.getRow(2).getCell(1);
+
         MainPage mainPage = MainPage.getInstance(webDriver);
-        webDriver.navigate().to(properties.getProperty(WWW_FLIP_KZ));
-//        webDriverWaitUtil.getWebDriverWait(webDriver).until(ExpectedConditions.visibilityOfElementLocated((By) mainPage.getProfileHoverElement()));
         mainPage.getProfileHoverElement().click();
         LoginPage loginPage = LoginPage.getInstance(webDriver);
         Random r = new Random();
@@ -118,34 +156,30 @@ public class SecondTestClass {
         }
         loginPage.getPasswordElement().sendKeys(wrongPassword);
         loginPage.getEnterButton().click();
-        webDriver.quit();
+
+        test = extent.createTest("Test Case 3", "The test case 'wrong log in' has passed");
     }
+
+
     @Test
-    public void submitOrderWithRightCredentials()
-    {
-        test = extent.createTest("Test Case 4", "The test case 'submit order with right credentials' has passed");
-        driverSettings.initDriver();
-        webDriver = driverSettings.getDriver();
-        webDriver.navigate().to(properties.getProperty(WWW_FLIP_KZ));
-        webDriver.manage().window().maximize();
+    public void submitOrderWithRightCredentials() {
+        cell = sheet.getRow(3).getCell(1);
+
         logIn(webDriver);
         addProductToCart(webDriver);
         submitRightAddress(webDriver);
-        webDriver.quit();
+
+        test = extent
+                .createTest("Test Case 4", "The test case 'submit order with right credentials' has passed");
     }
 
     @Test
-    public void submitOrderWithWrongCredentials()
-    {
-        test = extent.createTest("Test Case 5", "The test case 'submit order with wrong credentials' has passed");
-        driverSettings.initDriver();
-        webDriver = driverSettings.getDriver();
-        webDriver.navigate().to(properties.getProperty(WWW_FLIP_KZ));
-        webDriver.manage().window().maximize();
+    public void submitOrderWithWrongCredentials() {
+        cell = sheet.getRow(4).getCell(1);
+
         logIn(webDriver);
         addProductToCart(webDriver);
         submitWrongAddress(webDriver);
-        webDriver.quit();
     }
 
     public void addProductToCart(WebDriver webDriver1) {
@@ -190,22 +224,5 @@ public class SecondTestClass {
         addressFormPage.getSubmitButton().click();
     }
 
-    @AfterMethod
-    public void getResult(ITestResult result) {
-        if(result.getStatus() == ITestResult.FAILURE) {
-            test.log(Status.FAIL,result.getThrowable());
-        }
-        else if(result.getStatus() == ITestResult.SUCCESS) {
-            test.log(Status.PASS, result.getTestName());
-        }
-        else {
-            test.log(Status.SKIP, result.getTestName());
-        }
-    }
-
-    @AfterTest
-    public void tearDown() {
-        extent.flush();
-    }
 }
 

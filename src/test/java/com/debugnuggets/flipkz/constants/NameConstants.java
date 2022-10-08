@@ -3,7 +3,8 @@ package com.debugnuggets.flipkz.constants;
 
 public class NameConstants {
 
-
+    public static final String EXCEL_FILE_PATH = "excel.file.path";
+    public static final String HTML_REPORT_FILE_PATH = "html.report.file.path";
     public static final String WWW_FLIP_KZ = "website.url";
     public static final String RIGHT_PHONE_NUMBER = "right.phone.number";
     public static final String RIGHT_PASSWORD = "right.password";
@@ -43,7 +44,4 @@ public class NameConstants {
     public static final String ID = "id";
     public static final String THERE_IS_NO_FAVOURITES_MESSAGE = "there.is.no.favourites.message";
     public static String HTML_REPORT_PATH;
-
-
-
 }
