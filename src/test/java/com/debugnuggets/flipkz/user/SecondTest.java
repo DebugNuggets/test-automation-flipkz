@@ -45,8 +45,8 @@ public class SecondTest {
 
     private WebDriver webDriver;
     private Workbook workbook;
-    private Sheet sheet;
-    private Cell cell;
+    private static Sheet sheet;
+    private static Cell cell;
     private FileInputStream fileInputStream;
     private FileOutputStream fileOutputStream;
 
@@ -117,7 +117,8 @@ public class SecondTest {
 
     @Test
     public void justLogin() {
-        cell = sheet.getRow(1).getCell(1);
+        cell = sheet.getRow(1).getCell(2);
+        System.out.println(cell.toString());
         logIn(webDriver);
         test = extent.createTest("Test Case 2", "The test case 'log in' has passed");
     }
@@ -126,20 +127,20 @@ public class SecondTest {
         MainPage mainPage = MainPage.getInstance(webDriver1);
         mainPage.getProfileHoverElement().click();
         LoginPage loginPage = LoginPage.getInstance(webDriver1);
-        loginPage.getUsernameElement().sendKeys(properties.getProperty(RIGHT_PHONE_NUMBER));
-        loginPage.getPasswordElement().sendKeys(properties.getProperty(RIGHT_PASSWORD));
+        loginPage.getUsernameElement().sendKeys(sheet.getRow(2).getCell(1).toString());
+        loginPage.getPasswordElement().sendKeys(sheet.getRow(3).getCell(1).toString());
         loginPage.getEnterButton().click();
     }
 
     @Test
     public void wrongLogIn() {
-        cell = sheet.getRow(2).getCell(1);
+        cell = sheet.getRow(4).getCell(2);
 
         MainPage mainPage = MainPage.getInstance(webDriver);
         mainPage.getProfileHoverElement().click();
         LoginPage loginPage = LoginPage.getInstance(webDriver);
         Random r = new Random();
-        StringBuilder wrongPhone = new StringBuilder(properties.getProperty(WRONG_PHONE_NUMBER));
+        StringBuilder wrongPhone = new StringBuilder(sheet.getRow(4).getCell(1).toString());
         for (int i = 0; i<10; i++)
         {
             if(i==0 || i==3 || i==6 || i==8)
@@ -193,16 +194,16 @@ public class SecondTest {
     public void submitRightAddress(WebDriver webDriver1)
     {
         AddressFormPage addressFormPage = AddressFormPage.getInstance(webDriver1);
-        addressFormPage.getFullNameElement().sendKeys(properties.getProperty(FULL_NAME));
+        addressFormPage.getFullNameElement().sendKeys(sheet.getRow(5).getCell(1).toString());
         addressFormPage.getCityElement().clear();
-        addressFormPage.getCityElement().sendKeys(properties.getProperty(CITY));
-        addressFormPage.getAddressElement().sendKeys(properties.getProperty(ADDRESS));
-        addressFormPage.getBuildingElement().sendKeys(properties.getProperty(BUILDING));
-        addressFormPage.getFlatElement().sendKeys(properties.getProperty(FLAT));
-        addressFormPage.getEntranceElement().sendKeys(properties.getProperty(ENTRANCE));
-        addressFormPage.getFloorElement().sendKeys(properties.getProperty(FLOOR));
+        addressFormPage.getCityElement().sendKeys(sheet.getRow(6).getCell(1).toString());
+        addressFormPage.getAddressElement().sendKeys(sheet.getRow(7).getCell(1).toString());
+        addressFormPage.getBuildingElement().sendKeys(sheet.getRow(8).getCell(1).toString());
+        addressFormPage.getFlatElement().sendKeys(sheet.getRow(9).getCell(1).toString());
+        addressFormPage.getEntranceElement().sendKeys(sheet.getRow(10).getCell(1).toString());
+        addressFormPage.getFloorElement().sendKeys(sheet.getRow(11).getCell(1).toString());
         addressFormPage.getPostalCodeElement().clear();
-        addressFormPage.getPostalCodeElement().sendKeys(properties.getProperty(POSTAL_CODE));
+        addressFormPage.getPostalCodeElement().sendKeys(sheet.getRow(12).getCell(1).toString());
         addressFormPage.getAddressButtonElement().click();
         addressFormPage.getSubmitButton().click();
     }
