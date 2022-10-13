@@ -24,11 +24,17 @@ public class MainPage {
     private WebElement profileHoverElement;
     private WebElement logOutButtonElement;
     private WebElement firstProductElement;
+    private WebElement searchInputElement;
+    private WebElement searchSubmitButtonElement;
+    private WebElement allowedCheckBoxElement;
     private List<WebElement> productsElements;
 
     private final By profileHover = By.xpath("//span[@class='p500']");
     private final By logOutButton = By.xpath("//a[@href='/user?exit']");
     private final By exampleProducts = By.xpath("//a[@class='pic l-h-250']");
+    private final By searchInput = By.xpath("//input[@id='search_input']");
+    private final By searchSubmitButton = By.xpath("//input[@type='submit']");
+    private final By allowedCheckBox = By.xpath(properties.getProperty("//label[@for='filter-field-i101']"));
 
     public MainPage(WebDriver webDriver)
     {
@@ -64,5 +70,20 @@ public class MainPage {
     public List<WebElement> getProductsElements() {
         productsElements = webDriver.findElements(exampleProducts);
         return productsElements;
+    }
+
+    public WebElement getSearchInputElement() {
+        searchInputElement = webDriver.findElement(searchInput);
+        return searchInputElement;
+    }
+
+    public WebElement getSearchSubmitButtonElement() {
+        searchSubmitButtonElement = webDriver.findElement(searchSubmitButton);
+        return searchSubmitButtonElement;
+    }
+
+    public WebElement getAllowedCheckBoxElement() {
+        allowedCheckBoxElement = webDriver.findElement(allowedCheckBox);
+        return allowedCheckBoxElement;
     }
 }

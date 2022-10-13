@@ -49,7 +49,10 @@ public class SecondTest {
     private static Cell cell;
     private FileInputStream fileInputStream;
     private FileOutputStream fileOutputStream;
-
+    private static MainPage mainPage;
+    private static LoginPage loginPage;
+    private static AddressFormPage addressFormPage;
+    private static ProductPage productPage;
     ExtentHtmlReporter htmlReporter;
 
     ExtentReports reports;
@@ -78,6 +81,11 @@ public class SecondTest {
         htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
         htmlReporter.config().setTheme(Theme.DARK);
         htmlReporter.config().setTimeStampFormat("EEEE, MMMM dd, yyyy, hh:mm a '('zzz')'");
+
+        productPage = ProductPage.getInstance(webDriver);
+        mainPage = MainPage.getInstance(webDriver);
+        addressFormPage = AddressFormPage.getInstance(webDriver);
+        loginPage = LoginPage.getInstance(webDriver);
     }
 
     @AfterTest
@@ -110,7 +118,6 @@ public class SecondTest {
     @Test
     public void logOutTest() {
         logIn(webDriver);
-        MainPage mainPage = MainPage.getInstance(webDriver);
         mainPage.getLogOutButtonElement().click();
         test = extent.createTest("Test Case 1", "The test case 'log out' has passed");
     }
@@ -124,8 +131,9 @@ public class SecondTest {
     }
 
     public static void logIn(WebDriver webDriver1) {
-        MainPage mainPage = MainPage.getInstance(webDriver1);
         mainPage.getProfileHoverElement().click();
+        loginPage.getUsernameElement().sendKeys(properties.getProperty(RIGHT_PHONE_NUMBER));
+        loginPage.getPasswordElement().sendKeys(properties.getProperty(RIGHT_PASSWORD));
         LoginPage loginPage = LoginPage.getInstance(webDriver1);
         loginPage.getUsernameElement().sendKeys(sheet.getRow(2).getCell(1).toString());
         loginPage.getPasswordElement().sendKeys(sheet.getRow(3).getCell(1).toString());
@@ -140,7 +148,7 @@ public class SecondTest {
         mainPage.getProfileHoverElement().click();
         LoginPage loginPage = LoginPage.getInstance(webDriver);
         Random r = new Random();
-        StringBuilder wrongPhone = new StringBuilder(sheet.getRow(4).getCell(1).toString());
+        StringBuilder wrongPhone = new StringBuilder(properties.getProperty(WRONG_PHONE_NUMBER));
         for (int i = 0; i<10; i++)
         {
             if(i==0 || i==3 || i==6 || i==8)
@@ -168,7 +176,7 @@ public class SecondTest {
 
         logIn(webDriver);
         addProductToCart(webDriver);
-        submitRightAddress(webDriver);
+        submitRightAddress();
 
         test = extent
                 .createTest("Test Case 4", "The test case 'submit order with right credentials' has passed");
@@ -180,21 +188,19 @@ public class SecondTest {
 
         logIn(webDriver);
         addProductToCart(webDriver);
-        submitWrongAddress(webDriver);
+        submitWrongAddress();
     }
 
     public void addProductToCart(WebDriver webDriver1) {
-        MainPage mainPage = MainPage.getInstance(webDriver1);
         mainPage.getFirstProductElement().click();
-        ProductPage productPage = ProductPage.getInstance(webDriver1);
         productPage.getAddToCartElement().click();
         webDriverWaitUtil.getWebDriverWait(webDriver).until(ExpectedConditions.elementToBeClickable(productPage.getSubmitButton())).click();
     }
 
-    public void submitRightAddress(WebDriver webDriver1)
+    public void submitRightAddress()
     {
-        AddressFormPage addressFormPage = AddressFormPage.getInstance(webDriver1);
         addressFormPage.getFullNameElement().sendKeys(sheet.getRow(5).getCell(1).toString());
+        addressFormPage.getFullNameElement().sendKeys(properties.getProperty(FULL_NAME));
         addressFormPage.getCityElement().clear();
         addressFormPage.getCityElement().sendKeys(sheet.getRow(6).getCell(1).toString());
         addressFormPage.getAddressElement().sendKeys(sheet.getRow(7).getCell(1).toString());
@@ -208,9 +214,8 @@ public class SecondTest {
         addressFormPage.getSubmitButton().click();
     }
 
-    public void submitWrongAddress(WebDriver webDriver1)
+    public void submitWrongAddress()
     {
-        AddressFormPage addressFormPage = AddressFormPage.getInstance(webDriver1);
         addressFormPage.getFullNameElement().sendKeys(properties.getProperty(WRONG_FULL_NAME));
         addressFormPage.getCityElement().clear();
         addressFormPage.getCityElement().sendKeys(properties.getProperty(WRONG_CITY));
