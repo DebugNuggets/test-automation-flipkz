@@ -34,7 +34,7 @@ public class MainPage {
     private final By exampleProducts = By.xpath("//a[@class='pic l-h-250']");
     private final By searchInput = By.xpath("//input[@id='search_input']");
     private final By searchSubmitButton = By.xpath("//input[@type='submit']");
-    private final By allowedCheckBox = By.xpath(properties.getProperty("//label[@for='filter-field-i101']"));
+    private final By allowedCheckBox = By.xpath("//label[@for='filter-field-i101']");
 
     public MainPage(WebDriver webDriver)
     {

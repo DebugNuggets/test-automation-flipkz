@@ -10,10 +10,7 @@ import com.debugnuggets.flipkz.pages.AddressFormPage;
 import com.debugnuggets.flipkz.pages.LoginPage;
 import com.debugnuggets.flipkz.pages.MainPage;
 import com.debugnuggets.flipkz.pages.ProductPage;
-import com.debugnuggets.flipkz.util.ActionsUtil;
-import com.debugnuggets.flipkz.util.DriverSettings;
-import com.debugnuggets.flipkz.util.PropertiesUtil;
-import com.debugnuggets.flipkz.util.WebDriverWaitUtil;
+import com.debugnuggets.flipkz.util.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -86,6 +83,7 @@ public class SecondTest {
         mainPage = MainPage.getInstance(webDriver);
         addressFormPage = AddressFormPage.getInstance(webDriver);
         loginPage = LoginPage.getInstance(webDriver);
+        DBUtil.createConnection();
     }
 
     @AfterTest
