@@ -1,6 +1,7 @@
 package com.debugnuggets.flipkz.util;
 
 import com.debugnuggets.flipkz.pages.ProductPage;
+import com.mongodb.DB;
 import org.openqa.selenium.WebDriver;
 
 import java.sql.*;
@@ -14,10 +15,23 @@ public class DBUtil {
     private static Statement statement;
     private static ResultSet resultSet;
 
-    public static void createConnection() {
-        String dbUrl = "jdbc:postgresql://localhost:5432/testingFlipKz";
+    private static DBUtil instance;
+
+    private DBUtil (){
+
+    }
+
+    public static DBUtil getInstance() {
+        if (instance == null) {
+            instance = new DBUtil();
+        }
+        return instance;
+    }
+
+    public void createConnection() {
+        String dbUrl = "jdbc:postgresql://localhost:5433/postgres";
         String dbUsername = "postgres";
-        String dbPassword = "123";
+        String dbPassword = "root";
         try {
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
         } catch (SQLException e) {
@@ -25,20 +39,21 @@ public class DBUtil {
         }
     }
 
-    private static void executeQuery(String query) {
+    private void executeQuery(String query) {
         try {
             statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         try {
+            System.out.println(query);
             resultSet = statement.executeQuery(query);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static List<String> getColumnNames(String query) {
+    public List<String> getColumnNames(String query) {
         executeQuery(query);
         List<String> columns = new ArrayList<>();
         ResultSetMetaData rsmd;
@@ -54,9 +69,17 @@ public class DBUtil {
         return columns;
     }
 
-    public static List<Map<String, Object>> getQueryResultMap(String query) {
-        executeQuery(query);
+    public List<Map<String, Object>> getQueryResultMap(String query) {
+        createConnection();
         List<Map<String, Object>> rowList = new ArrayList<>();
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         ResultSetMetaData rsmd;
         try {
             rsmd = resultSet.getMetaData();
@@ -74,7 +97,7 @@ public class DBUtil {
             return rowList;
     }
 
-    public static List<List<Object>> getQueryResultList(String query) {
+    public List<List<Object>> getQueryResultList(String query) {
         executeQuery(query);
         List<List<Object>> rowList = new ArrayList<>();
         ResultSetMetaData rsmd;
@@ -93,22 +116,22 @@ public class DBUtil {
         return rowList;
     }
 
-    public static List<Object> getColumnData(String query, String column) {
+    public List<Object> getColumnData(String query, String column) {
         executeQuery(query);
-       List<Object> rowList = new ArrayList<>();
-       ResultSetMetaData rsmd;
-       try {
+        List<Object> rowList = new ArrayList<>();
+        ResultSetMetaData rsmd;
+        try {
            rsmd = resultSet.getMetaData();
            while (resultSet.next()) {
                rowList.add(resultSet.getObject(column));
            }
-       } catch (SQLException e) {
+        } catch (SQLException e) {
            e.printStackTrace();
-       }
-       return rowList;
+        }
+        return rowList;
     }
 
-    public static void destroy() {
+    public void destroy() {
         try {
             if (resultSet != null)
             {

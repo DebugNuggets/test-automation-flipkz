@@ -26,6 +26,9 @@ import org.testng.annotations.Test;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -53,6 +56,14 @@ public class SecondTest {
     ExtentHtmlReporter htmlReporter;
 
     ExtentReports reports;
+
+    private static final String SELECT_USER_FULL_NAME = "select 'full_name' from user_credential where id = 1";
+    private static final String SELECT_PHONE_NUMBER = "select 'phone_number' from user_credential where id = 1";
+    private static final String SELECT_PASSWORD = "select 'password' from user_credential where id = 1";
+    private static final String SELECT_EVERYTHING = "select * from user_credential where id = 1";
+    private static List<Map<String, Object>> resultOfQuery;
+
+    private static DBUtil dbUtil = DBUtil.getInstance();
 
     ExtentTest test;
 
@@ -83,19 +94,19 @@ public class SecondTest {
         mainPage = MainPage.getInstance(webDriver);
         addressFormPage = AddressFormPage.getInstance(webDriver);
         loginPage = LoginPage.getInstance(webDriver);
-        DBUtil.createConnection();
+        dbUtil.createConnection();
     }
 
     @AfterTest
     public void tearDown() throws IOException {
-        fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + properties.getProperty(EXCEL_FILE_PATH));
-        workbook.write(fileOutputStream);
-        fileOutputStream.close();
-        fileInputStream.close();
-        workbook.close();
-        webDriver.close();
-        extent.flush();
-        webDriver.quit();
+//        fileOutputStream = new FileOutputStream(System.getProperty("user.dir") + properties.getProperty(EXCEL_FILE_PATH));
+//        workbook.write(fileOutputStream);
+//        fileOutputStream.close();
+//        fileInputStream.close();
+//        workbook.close();
+//        webDriver.close();
+//        extent.flush();
+//        webDriver.quit();
     }
 
     @AfterMethod
@@ -130,11 +141,11 @@ public class SecondTest {
 
     public static void logIn(WebDriver webDriver1) {
         mainPage.getProfileHoverElement().click();
-        loginPage.getUsernameElement().sendKeys(properties.getProperty(RIGHT_PHONE_NUMBER));
-        loginPage.getPasswordElement().sendKeys(properties.getProperty(RIGHT_PASSWORD));
-        LoginPage loginPage = LoginPage.getInstance(webDriver1);
-        loginPage.getUsernameElement().sendKeys(sheet.getRow(2).getCell(1).toString());
-        loginPage.getPasswordElement().sendKeys(sheet.getRow(3).getCell(1).toString());
+        resultOfQuery = dbUtil.getQueryResultMap(SELECT_EVERYTHING);
+        String phoneNumber = (String) resultOfQuery.get(0).get("phone_number");
+        String password = (String) resultOfQuery.get(0).get("password");
+        loginPage.getUsernameElement().sendKeys(phoneNumber);
+        loginPage.getPasswordElement().sendKeys(password);
         loginPage.getEnterButton().click();
     }
 
