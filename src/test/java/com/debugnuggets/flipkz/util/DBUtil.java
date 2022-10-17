@@ -29,9 +29,9 @@ public class DBUtil {
     }
 
     public void createConnection() {
-        String dbUrl = "jdbc:postgresql://localhost:5433/postgres";
+        String dbUrl = "jdbc:postgresql://localhost:5432/testingFlipKz";
         String dbUsername = "postgres";
-        String dbPassword = "root";
+        String dbPassword = "123";
         try {
             connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
         } catch (SQLException e) {

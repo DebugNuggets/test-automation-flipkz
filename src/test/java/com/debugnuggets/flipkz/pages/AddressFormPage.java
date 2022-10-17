@@ -1,8 +1,14 @@
 package com.debugnuggets.flipkz.pages;
 
+import com.debugnuggets.flipkz.util.DBUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import java.util.List;
+import java.util.Map;
+
+import static com.debugnuggets.flipkz.constants.NameConstants.*;
 
 
 public class AddressFormPage {
@@ -18,6 +24,10 @@ public class AddressFormPage {
     private WebElement postalCodeElement;
     private WebElement addressButtonElement;
     private WebElement submitButton;
+    private static final String SELECT_EVERYTHING_RIGHT = "select * from user_credential where id = 1";
+    private static final String SELECT_EVERYTHING_WRONG = "select * from user_credential where id = 2";
+    private static List<Map<String, Object>> resultOfQuery;
+    private static DBUtil dbUtil = DBUtil.getInstance();
 
     private final By fullName = By.xpath("//input[@name='fullName']");
     private final By city = By.xpath("//input[@name='city']");
@@ -91,5 +101,37 @@ public class AddressFormPage {
     public WebElement getSubmitButton() {
         submitButton = webDriver.findElement(submit);
         return submitButton;
+    }
+
+    public void submitRightAddress() {
+        resultOfQuery = dbUtil.getQueryResultMap(SELECT_EVERYTHING_RIGHT);
+        instance.getFullNameElement().sendKeys((String) resultOfQuery.get(0).get("full_name"));
+        instance.getCityElement().clear();
+        instance.getCityElement().sendKeys((String) resultOfQuery.get(0).get("city"));
+        instance.getAddressElement().sendKeys((String) resultOfQuery.get(0).get("address"));
+        instance.getBuildingElement().sendKeys((String) resultOfQuery.get(0).get("building"));
+        instance.getFlatElement().sendKeys((String) resultOfQuery.get(0).get("flat"));
+        instance.getEntranceElement().sendKeys((String) resultOfQuery.get(0).get("entrance"));
+        instance.getFloorElement().sendKeys((String) resultOfQuery.get(0).get("floor"));
+        instance.getPostalCodeElement().clear();
+        instance.getPostalCodeElement().sendKeys((String) resultOfQuery.get(0).get("postal_code"));
+        instance.getAddressButtonElement().click();
+        instance.getSubmitButton().click();
+    }
+
+    public void submitWrongAddress()
+    {
+        resultOfQuery = dbUtil.getQueryResultMap(SELECT_EVERYTHING_WRONG);
+        instance.getFullNameElement().sendKeys((String) resultOfQuery.get(0).get("full_name"));
+        instance.getCityElement().clear();
+        instance.getCityElement().sendKeys((String) resultOfQuery.get(0).get("city"));
+        instance.getAddressElement().sendKeys((String) resultOfQuery.get(0).get("address"));
+        instance.getBuildingElement().sendKeys((String) resultOfQuery.get(0).get("building"));
+        instance.getFlatElement().sendKeys((String) resultOfQuery.get(0).get("flat"));
+        instance.getEntranceElement().sendKeys((String) resultOfQuery.get(0).get("entrance"));
+        instance.getFloorElement().sendKeys((String) resultOfQuery.get(0).get("floor"));
+        instance.getPostalCodeElement().clear();
+        instance.getPostalCodeElement().sendKeys((String) resultOfQuery.get(0).get("postal_code"));
+        instance.getAddressButtonElement().click();
     }
 }

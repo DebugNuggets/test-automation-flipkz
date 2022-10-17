@@ -86,4 +86,16 @@ public class MainPage {
         allowedCheckBoxElement = webDriver.findElement(allowedCheckBox);
         return allowedCheckBoxElement;
     }
+
+    public void logOut() {
+        instance.getLogOutButtonElement().click();
+    }
+
+    public void toLogIn() {
+        instance.getProfileHoverElement().click();
+    }
+
+    public void clickFirstProduct() {
+        instance.getFirstProductElement().click();
+    }
 }

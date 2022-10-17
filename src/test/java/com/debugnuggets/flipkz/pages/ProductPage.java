@@ -1,15 +1,13 @@
 package com.debugnuggets.flipkz.pages;
 
-import com.debugnuggets.flipkz.util.PropertiesUtil;
+import com.debugnuggets.flipkz.util.WebDriverWaitUtil;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.util.Properties;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ProductPage {
-    private static final Properties properties = PropertiesUtil.getInstance().getProperties();
+    private static final WebDriverWaitUtil webDriverWaitUtil = WebDriverWaitUtil.getInstance();
     private static ProductPage instance;
     private WebElement addToCartElement;
     private WebElement submitButtonElement;
@@ -36,5 +34,10 @@ public class ProductPage {
     public WebElement getSubmitButton() {
         submitButtonElement = webDriver.findElement(submitButton);
         return submitButtonElement;
+    }
+
+    public void addToCart() {
+        instance.getAddToCartElement().click();
+        webDriverWaitUtil.getWebDriverWait(webDriver).until(ExpectedConditions.elementToBeClickable(instance.getSubmitButton())).click();
     }
 }
