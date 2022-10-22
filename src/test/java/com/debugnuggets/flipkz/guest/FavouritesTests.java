@@ -53,7 +53,7 @@ public class FavouritesTests {
     }
 
     @BeforeTest
-    public void startReport() throws IOException {
+    public void startReport() {
         driverSettings.initDriver();
         webDriver = driverSettings.getDriver();
         webDriver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
