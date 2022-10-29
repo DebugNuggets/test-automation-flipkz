@@ -55,6 +55,7 @@ public class LoginPage {
         resultOfQuery = dbUtil.getQueryResultMap(SELECT_EVERYTHING_RIGHT);
         String phoneNumber = (String) resultOfQuery.get(0).get("phone_number");
         String password = (String) resultOfQuery.get(0).get("password");
+
         instance.getUsernameElement().sendKeys(phoneNumber);
         instance.getPasswordElement().sendKeys(password);
         instance.getEnterButton().click();

@@ -7,12 +7,10 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.debugnuggets.flipkz.constants.NameConstants;
 import com.debugnuggets.flipkz.pages.LoginPage;
 import com.debugnuggets.flipkz.pages.MainPage;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
+//import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import org.aeonbits.owner.ConfigFactory;
 
 
-import org.apache.http.MessageConstraintException;
-import org.apache.logging.log4j.core.util.Constants;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -41,14 +39,14 @@ public class BaseTest {
         NameConstants.HTML_REPORT_PATH = "target//html/FlipKzAutomationReport" + System.currentTimeMillis() + ".html";
         htmlReporter = new ExtentHtmlReporter(NameConstants.HTML_REPORT_PATH);
         extent.attachReporter(htmlReporter);
-        htmlReporter.loadXMLConfig("src/test/resources/extent-config.xml");
+//        htmlReporter.loadXMLConfig("src/test/resources/extent-config.xml");
         extent.setSystemInfo("Hostname", "flip.kz");
         extent.setSystemInfo("Execution Environment", "Staging");
         extent.setSystemInfo("Browser", propertiesReader.browser());
     }
 
     @AfterTest
-    public void endReport() throws MessagingException, IOException {
+    public void endReport() throws IOException {
         extent.flush();
     }
 
